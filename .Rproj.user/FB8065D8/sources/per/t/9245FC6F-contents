@@ -1,0 +1,113 @@
+---
+title: '**Tarea 5**'
+author: ' \textcolor{blue}{Iván F. Quiroz Ibáñez}'
+date: "`r format(Sys.time(), '%d % de %B % de %Y')`"
+language: es-MX
+output:
+  pdf_document:
+    includes:
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    fig_caption: yes
+    df_print: paged
+  word_document:
+subtitle: COA-501 Herramientas de cómputo para investigadores
+---
+
+### ** 1) Instrucciones**
+Cree 5 pares de objetos tmin1, tmax1, tmin2, tmax2, …, tmin5, tmax5 de longitud 5. Donde tmin son temperaturas mínimas diarias y tmax son temperaturas máximas diarias. Luego,cree una matriz temperatura (dim 5 x 10) con los objetos creados. Utilice la función tpromedio vista en clase para calcular los promedios de temperatura tp1, tp2, …,tp5, cree una matriz para guardar estos promedios. Defina un ciclo **for** para hacer los cálculos en forma cíclica.
+
+
+### ** 2) Creación de datos**
+```{r}
+set.seed(123)
+tmin1 <- sample(0:10,5,replace=T)
+tmax1 <- sample(25:32,5,replace = T)
+
+tmin2 <- sample(0:10,5,replace=T)
+tmax2 <- sample(25:32,5,replace = T)
+
+tmin3 <- sample(0:10,5,replace=T)
+tmax3 <- sample(25:32,5,replace = T)
+
+tmin4 <- sample(0:10,5,replace=T)
+tmax4 <- sample(25:32,5,replace = T)
+
+tmin5 <- sample(0:10,5,replace=T)
+tmax5 <- sample(25:32,5,replace = T)
+
+temperatura <- cbind(tmin1,tmax1,tmin2,tmax2,tmin3,tmax3,tmin4,tmax4,tmin5,tmax5)
+dim(temperatura)
+```
+
+### ** 3) Filtrado y organización de base de datos**
+```{r}
+temperatura_r <- rbind(temperatura[,c(1,2)],temperatura[,c(3,4)],
+                temperatura[,c(5,6)],temperatura[,c(7,8)],temperatura[,c(9,10)])
+
+colnames(temperatura_r) <- c("tmin","tmax")
+
+t.promedio <- function(tmin, tmax) 
+{ 
+  ( tmax + tmin ) / 2
+}
+
+tp1 <- t.promedio(temperatura[,1],temperatura[,2])
+tp2 <- t.promedio(temperatura[,3],temperatura[,4])
+tp3 <- t.promedio(temperatura[,5],temperatura[,6])
+tp4 <- t.promedio(temperatura[,7],temperatura[,8])
+tp5 <- t.promedio(temperatura[,9],temperatura[,10])
+
+tp1;tp2;tp3;tp4;tp5
+
+tp <- cbind(tp1,tp2,tp3,tp4,tp5)
+```
+
+### ** 4) Uso del bucle For **
+```{r}
+#Opcion 1 funcion por filas con matrix temperatura_r y print como array
+ for ( row in 1:nrow(temperatura_r)) { 
+   
+   tmin <- temperatura_r[row, "tmin"]
+   tmax  <- temperatura_r[row, "tmax"]
+   
+    t.prom <- (tmin+tmax)/2
+    
+    #print(paste("Promedio de",
+    #t.prom,"°C"))
+    
+    print(array(t.prom))
+    
+ }
+
+
+
+# Opcion 2 Aplicar funcion ordenada en filas con matrix temperatura y print como array
+for ( row in 1:nrow(temperatura)) { 
+    
+  tmin <- temperatura[row,seq_len(ncol(temperatura))%%2==1]#c(1,3,5,7,9)
+  tmax  <- temperatura[row,seq_len(ncol(temperatura))%%2==0]#2,4,6,8,10
+  
+  t.prom <- (tmin+tmax)/2
+  
+  #print(paste("Promedio de",
+  #t.prom,"°C","en la fila",row))
+  print(array(t.prom))
+}
+
+
+#Ordenar de forma vertical (tmin1,tmax1,...) de filas a columna
+for(row in 1:nrow(temperatura)) {
+  for(col in 1:ncol(temperatura)) {
+    print(array(temperatura[row, col]))
+  }
+}
+
+```
+
+
+### ** 5) Conclusiones**
+
+El bucle for se utiliza para recorrer los elementos de un objeto iterable (lista, tupla, conjunto, diccionario, …) y ejecutar un bloque de código. En cada paso de la iteración se tiene en cuenta a un único elemento del objeto iterable, sobre el cuál se pueden aplicar una serie de operaciones.
+

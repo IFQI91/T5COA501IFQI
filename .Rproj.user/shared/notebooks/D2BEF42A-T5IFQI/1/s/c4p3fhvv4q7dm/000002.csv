@@ -1,0 +1,23 @@
+"0","```r
+ml <- lm(desplazamiento~peso,t4.df.datos)
+summary(ml)
+
+#grafica predictor vs predicho
+plot(t4.df.datos$peso,t4.df.datos$desplazamiento)
+abline(ml,col=\"red\")
+
+#grafica predictor vs ajustados
+plot(ml$fitted.values,t4.df.datos$peso)
+
+#grafica residuales vs predichos
+
+plot(ml$fitted.values,ml$residuals)
+
+plot(ml,3)
+
+#qqplot
+plot(ml,2)
+
+#Kolmogorov-Smirnov test
+ks.test(ml$residuals,\"pnorm\")
+```"

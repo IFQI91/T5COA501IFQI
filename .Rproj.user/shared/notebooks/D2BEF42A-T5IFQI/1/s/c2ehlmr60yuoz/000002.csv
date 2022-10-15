@@ -1,0 +1,9 @@
+"0","```r
+library(readxl)
+t4.df.datos <- read_xlsx(\"T4_df_auto.xlsx\")
+head(t4.df.datos)
+
+names (t4.df.datos) = c(\"ID\", \"millasporgalon\", \"cilindros\", \"desplazamiento\", 
+              \"caballosdefuerza\", \"peso\", \"aceleracion\",\"anio\",\"origen\",\"nombre\")
+names (t4.df.datos)
+```"
